@@ -4,6 +4,8 @@ const request = require('request');
 const app = express();
 const port = process.env.PORT || 5000;
 
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+console.log(`PORT: ${process.env.PORT}`);
 app.get('/fetch-source-code', (req, res) => {
     console.log("***** request params:", req.query.url)
     var urlParam = req.query.url;
