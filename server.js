@@ -5,11 +5,8 @@ const path = require('path')
 const app = express();
 const port = process.env.PORT || 5000;
 
-console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
-console.log(`PORT: ${process.env.PORT}`);
 app.get('/fetch-source-code', (req, res) => {
-    console.log("***** request params:", req.query.url)
-    var urlParam = req.query.url;
+    const urlParam = req.query.url;
     if (urlParam) {
         request({
             method: 'GET',
@@ -26,13 +23,16 @@ app.get('/fetch-source-code', (req, res) => {
     } else {
         res.status(500).send({ error: 'Something went wrong. Please try after some time.' });
     }
-
 });
 
-app.use(express.static(path.join(__dirname, 'client/build')));
+if (process.env.NODE_ENV === 'production') {
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/client/build/index.html'));
-});
+    // Handle React routing, return all requests to React app
+    app.get('*', function (req, res) {
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
+}
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
