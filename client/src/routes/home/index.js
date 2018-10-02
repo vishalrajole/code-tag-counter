@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Tags, Tag, Input, Button, Code, CodeWrapper, Loader, ErrorText } from './style';
+import Highlighter from "react-highlight-words";
+import { stat } from 'fs';
 
 class Home extends Component {
-    initialState = { url: '', htmlData: '', counts: {}, isLoading: false, isUrlValid: false, errorText: '' };
+    initialState = { url: '', htmlData: '', counts: {}, isLoading: false, isUrlValid: false, errorText: '', selectedTags: [] };
     state = this.initialState;
     myRef = React.createRef();
 
@@ -15,32 +17,7 @@ class Home extends Component {
             axios.get(url).then((res) => {
                 if (res.data.length) {
                     var tempData = res.data;
-                    // tempData = tempData.replace(/</gi, "&lt;");
-                    // tempData = tempData.replace(/>/gi, "&gt;");
-
-                    // tempData = tempData.split('&lt;').join('<span>&lt;');
-                    // tempData = tempData.split('&gt;').join('&gt;</span>');
-
-                    // // tempData.match(/&lt;\b(\w*\w*)\b/g);
-                    // this.myRef.current.innerHTML = tempData;
-
                     var counts = this.getTagsWithCount(tempData);
-                    // var entityMap = {
-                    //     "&": "&amp;",
-                    //     "<": "&lt;",
-                    //     ">": "&gt;",
-                    //     '"': '&quot;',
-                    //     "'": '&#39;',
-                    //     "/": '&#x2F;'
-                    // };
-                    // tempData = escapeHtml(tempData)
-                    // function escapeHtml(string) {
-                    //     return String(string).replace(/[&<>"'\/]/g, function (s) {
-                    //         return entityMap[s];
-                    //     });
-                    // }
-                    // this.myRef.current.innerHTML = tempData;
-
                     this.setState({ htmlData: tempData, counts, isLoading: false, errorText: '' });
                 }
             }).catch((error) => {
@@ -80,12 +57,17 @@ class Home extends Component {
         return regex.test(url);
     }
 
-    selectTag = (value, index) => (event) => {
-        console.log('inside selectTag:', value, index)
+    selectTag = (value) => (event) => {
+        this.setState(state => {
+            const selectedTags = [value];
+            return { selectedTags }
+        }, () => {
+            console.log(this.state);
+        });
     }
     renderTags = () => {
         return Object.keys(this.state.counts).map((val, index) => {
-            return (<Tag key={index} onClick={this.selectTag(val, index)}>{val.toLowerCase()} - {this.state.counts[val]}</Tag>);
+            return (<Tag key={index} className={this.state.selectedTags[0] == val && 'active'} onClick={this.selectTag(val, index)}>{val.toLowerCase()} - {this.state.counts[val]}</Tag>);
         })
     }
     render() {
@@ -99,9 +81,15 @@ class Home extends Component {
                 <h3>Source Code</h3>
                 <CodeWrapper>
                     <Code>
+
                         <pre>
                             <code ref={this.myRef}>
-                                {this.state.htmlData && this.state.htmlData}
+                                {this.state.htmlData && <Highlighter
+                                    highlightClassName="mark"
+                                    searchWords={this.state.selectedTags}
+                                    autoEscape={true}
+                                    textToHighlight={this.state.htmlData}
+                                />}
                             </code>
                         </pre>
                         {this.state.errorText && !this.state.isLoading && <Loader><ErrorText>{this.state.errorText}</ErrorText></Loader>}

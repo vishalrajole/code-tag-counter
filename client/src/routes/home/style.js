@@ -13,6 +13,11 @@ export const Tag = styled.li`
     margin: 5px;
     padding: 5px 10px;
     float: left;
+    cursor: pointer;
+    &.active {
+        background-color: #3b5d81;
+        border-color: #3b5d81
+    }
 `;
 
 export const Input = styled.input`
