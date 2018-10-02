@@ -1,7 +1,7 @@
 ### Steps for local setup:
 1. Clone repo from git@github.com:vishalrajole/code-tag-counter.git
 1. Run `npm install` to install dependencies
-1. npm start
+1. Start server with `nodemon server.js` and react app by executing `cd client` and run `npm start`
 
 
 ### Steps to test:
