@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { PRIMARY_BG, PRIMARY_BORDER, PRIMARY_BG_ACTIVE, PRIMARY_BORDER_ACTIVE, PRIMARY_COLOR, PRIMARY_BORDER_DISABLED, PRIMARY_BG_DISABLED, LIGHT_BG, ERROR_TEXT } from '../../styles/variables';
 
 export const Tags = styled.ul`
     padding: 0 15px;
@@ -7,21 +8,21 @@ export const Tags = styled.ul`
 `;
 
 export const Tag = styled.li`
-    background-color: #4381C1;
-    border: 1px solid #4381C1;
-    color: #fff;
+    background-color: ${PRIMARY_BG};
+    border: 1px solid ${PRIMARY_BORDER};
+    color: ${PRIMARY_COLOR};
     margin: 5px;
     padding: 5px 10px;
     float: left;
     cursor: pointer;
     &.active {
-        background-color: #3b5d81;
-        border-color: #3b5d81
+        background-color: ${PRIMARY_BG_ACTIVE};
+        border-color: ${PRIMARY_BORDER_ACTIVE};
     }
 `;
 
 export const Input = styled.input`
-    border: 1px solid #236776;
+    border: 1px solid ${PRIMARY_BORDER};
     padding: 5px 15px;
     height: 20px;
     font-size: 1rem;
@@ -30,44 +31,42 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-    border: 1px solid #4381C1;
-    color: #fff;
-    background-color: #4381C1;
+    background-color: ${PRIMARY_BG};
+    border: 1px solid ${PRIMARY_BORDER};
+    color: ${PRIMARY_COLOR};
     height: 32px;
     padding: 0px 15px;
     font-size: 1.1rem;
     
     &:disabled {
-        background-color: #B5B9B9;
-        border: 1px solid #B5B9B9;
+        background-color: ${PRIMARY_BG_DISABLED};
+        border: 1px solid ${PRIMARY_BORDER_DISABLED};
     }
 `;
 export const Code = styled.blockquote`
     position: relative;
     width: 65%;
     height: calc(100vh - 130px);
-    margin: 0px;
-    border: 1px solid #236776;
+    margin: 0px 0px 10px 0px;
+    border: 1px solid ${PRIMARY_BORDER};
     overflow-y: auto;
-    font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-    margin-bottom: 10px;
     padding: 5px;
-    background-color: #eee;
+    background-color: ${LIGHT_BG};
 `;
 
 export const Loader = styled.div`
+    width: 100%;
+    height: 100%;
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.4rem;
-    width: 100%;
-    height: 100%;
 `;
 
 export const ErrorText = styled.small`
     display: block;
-    color: red;
+    color: ${ERROR_TEXT};
 `;
 
 export const CodeWrapper = styled.div`

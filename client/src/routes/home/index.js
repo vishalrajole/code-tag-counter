@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Tags, Tag, Input, Button, Code, CodeWrapper, Loader, ErrorText } from './style';
 import Highlighter from "react-highlight-words";
-import { stat } from 'fs';
 
 class Home extends Component {
     initialState = { url: '', htmlData: '', counts: {}, isLoading: false, isUrlValid: false, errorText: '', selectedTags: [] };
@@ -27,7 +26,7 @@ class Home extends Component {
                     const errorText = error.response.data.error || 'Something went wrong. Please try again later'
                     this.setState({ errorText })
                 }
-                //Set some error message on failure: Test by throwing error from backend
+                //ELSE Set some error message on failure: Test by throwing error from backend
             })
         }
     }
@@ -81,7 +80,6 @@ class Home extends Component {
                 <h3>Source Code</h3>
                 <CodeWrapper>
                     <Code>
-
                         <pre>
                             <code ref={this.myRef}>
                                 {this.state.htmlData && <Highlighter
